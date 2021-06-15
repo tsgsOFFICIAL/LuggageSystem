@@ -36,6 +36,22 @@ namespace LuggageSystem
             this.WindowState = WindowState.Minimized;
         }
         /// <summary>
+        /// Maximize the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Button_Click_Maximize(object sender, RoutedEventArgs e)
+        {
+            //if (this.WindowState.Equals(WindowState.Maximized))
+            //{
+            //    this.WindowState = WindowState.Normal;
+            //}
+            //else
+            //{
+            //    this.WindowState = WindowState.Maximized;
+            //}
+        }
+        /// <summary>
         /// Close the window
         /// </summary>
         /// <param name="sender"></param>

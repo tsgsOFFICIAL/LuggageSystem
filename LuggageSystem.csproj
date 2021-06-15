@@ -4,14 +4,18 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <StartupObject>LuggageSystem.App</StartupObject>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="icon.png" />
+    <None Remove="suitcase.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="icon.png" />
+    <Resource Include="suitcase.png" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Baggage Sorting Facility" Height="450" Width="800"
         ResizeMode="CanResize"
         WindowStyle="None"
         Background="#383838"
@@ -95,27 +95,15 @@
 
     <Grid>
         <!-- Custom header -->
-        <Frame x:Name="Display" Margin="0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="Display" Margin="0,30,0,0" NavigationUIVisibility="Hidden"/>
         <TextBlock Background="#1c1b1b" VerticalAlignment="Top" Height="30" MouseLeftButtonDown="WindowHeader_Mousedown"/>
         <Image Source="/icon.png" MaxHeight="26" Margin="0,2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonDown="WindowHeader_Mousedown"/>
         <TextBlock Text="Baggage Sorting Facility" FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" Margin="30,2,0,420" MouseLeftButtonDown="WindowHeader_Mousedown"/>
         <TextBlock Text="by tsgsOFFICIAL" FontFamily="Roboto" FontSize="12" Foreground="GhostWhite" Margin="33,16,660,414" MouseLeftButtonDown="WindowHeader_Mousedown"/>
-        <Button Background="Transparent" Content="&#x1F5D5;" FontSize="18" VerticalAlignment="Top" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}"/>
-        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Margin="770 0 0 420" Style="{DynamicResource CloseBtn}"/>
-
-        <!-- Navigation -->
-        <!--
-        <StackPanel Width="300" Height="20" Margin="0 5 40 5" VerticalAlignment="Top" Orientation="Horizontal">
-            -->
-        <!--<Button x:Name="GoHome" BorderThickness="0,0,0,1" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Plugin info" Cursor="Hand" Click="Button_Click_ReturnHome" Style="{DynamicResource ButtonStyle1}"/>
-            <Button x:Name="GoCreate" BorderThickness="0,0,0,1" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Content="Create categories" Cursor="Hand" Click="Button_Click_DefineActions" Style="{DynamicResource ButtonStyle1}"/>
-            <Button x:Name="GoEdit" BorderThickness="0,0,0,1" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Margin="10,0,0,0" Content="Import/Export" Cursor="Hand" Click="Button_Click_Edit" Style="{DynamicResource ButtonStyle1}"/>-->
-        <!--
-        </StackPanel>-->
-
-        <!-- Update warning -->
-        <!--<Button x:Name="UpdateButton" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,2,70,0" Height="26" Background="Transparent" BorderThickness="0" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Click="UpdateButtonClick" Cursor="Hand" Style="{DynamicResource NavButtons}"/>-->
-
+        <Button Background="Transparent" Content="&#x1F5D5;" FontSize="18" VerticalAlignment="Top" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,60,0" Style="{DynamicResource NavButtons}"/>
+        <Button Background="Transparent" Content="&#x1F5D6;" FontSize="18" VerticalAlignment="Top" ToolTip="Maximize" Click="Button_Click_Maximize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="No" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}"/>
+        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top" Height="31" Width="30" Style="{DynamicResource CloseBtn}"/>
+        
         <!-- Small white border arount the window -->
         <Border BorderBrush="White" BorderThickness="0.1"/>
     </Grid>
