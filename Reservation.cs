@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace LuggageSystem
 {
-    class Reservation
+    public class Reservation
     {
+        public DateTime ReservationTime { get; private set; }
+        public Reservation()
+        {
+            ReservationTime = DateTime.Now;
+        }
     }
 }

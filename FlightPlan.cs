@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LuggageSystem
 {
-    class FlightPlan
+    public class FlightPlan
     {
+
     }
 }
