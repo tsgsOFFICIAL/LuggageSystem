@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LuggageSystem
 {
-    class ReservationManagerc
+    public interface IOpen
     {
+        public void Open();
     }
 }

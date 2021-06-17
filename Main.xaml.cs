@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,6 @@ namespace LuggageSystem
     /// </summary>
     public partial class Main : Page
     {
-        Brush _CustomColor;
-        Random _Random = new Random();
-
         public Main()
         {
             InitializeComponent();
@@ -33,7 +31,6 @@ namespace LuggageSystem
             {
                 Files.Add(file.Substring(15));
             }
-
         }
         #region Event handling
         /// <summary>
@@ -46,32 +43,5 @@ namespace LuggageSystem
             // Code to execute when the window loses focus
         }
         #endregion
-
-        private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.OriginalSource is Rectangle)
-            {
-                Rectangle activeRect = (Rectangle)e.OriginalSource;
-
-                myCanvas.Children.Remove(activeRect);
-            }
-            else
-            {
-                _CustomColor = new SolidColorBrush(Color.FromRgb((byte)_Random.Next(0, 255 + 1), (byte)_Random.Next(0, 255 + 1), (byte)_Random.Next(0, 255 + 1)));
-
-                Rectangle newRectangle = new Rectangle
-                {
-                    Width = 50,
-                    Height = 50,
-                    Fill = _CustomColor,
-                    StrokeThickness = 2,
-                    Stroke = Brushes.Black
-                };
-                Canvas.SetLeft(newRectangle, Mouse.GetPosition(myCanvas).X);
-                Canvas.SetTop(newRectangle, Mouse.GetPosition(myCanvas).Y);
-
-                myCanvas.Children.Add(newRectangle);
-            }
-        }
     }
 }
