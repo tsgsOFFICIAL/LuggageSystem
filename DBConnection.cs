@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,9 @@ namespace LuggageSystem
 {
     public class DBConnection
     {
-        /// <summary>
-        /// 
-        /// </summary>
         private NpgsqlConnection _Connection { get; set; }
         /// <summary>
-        /// 
+        /// Database Connection
         /// </summary>
         /// <param name="host"></param>
         /// <param name="username"></param>
@@ -22,8 +20,10 @@ namespace LuggageSystem
         /// <param name="database"></param>
         public DBConnection(string host, string username, string password, string database)
         {
-            string connectionString = $"Host={host};Username={username};Password={username};Database={database}";
-            NpgsqlConnection _Connection = new NpgsqlConnection(connectionString);
+            string connectionString = $"Host={host};Username={username};Password={password};Database={database}";
+            _Connection = new NpgsqlConnection(connectionString);
+
+            Close();
         }
         /// <summary>
         /// Open a connection to a database
@@ -36,7 +36,8 @@ namespace LuggageSystem
             }
             catch (Exception)
             {
-                throw new Exception("A connection is already open");
+                throw;
+                //throw new Exception("A connection is already open");
             }
         }
         /// <summary>
@@ -50,7 +51,8 @@ namespace LuggageSystem
             }
             catch (Exception)
             {
-                throw new Exception("A connection is already closed");
+                throw;
+                //throw new Exception("A connection is already closed");
             }
         }
         /// <summary>

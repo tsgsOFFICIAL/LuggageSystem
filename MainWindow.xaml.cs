@@ -23,7 +23,7 @@ namespace LuggageSystem
         public MainWindow()
         {
             InitializeComponent();
-            Display.Content = new Main();
+            Display.Content = new Main(); // Show "Main" page in the frame "Display"
         }
         #region Window Buttons & Functionality
         /// <summary>
@@ -42,14 +42,17 @@ namespace LuggageSystem
         /// <param name="e"></param>
         public void Button_Click_Maximize(object sender, RoutedEventArgs e)
         {
-            //if (this.WindowState.Equals(WindowState.Maximized))
-            //{
-            //    this.WindowState = WindowState.Normal;
-            //}
-            //else
-            //{
-            //    this.WindowState = WindowState.Maximized;
-            //}
+            if (Maximize_Button.Cursor == Cursors.Hand)
+            {
+                if (this.WindowState.Equals(WindowState.Maximized))
+                {
+                    this.WindowState = WindowState.Normal;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Maximized;
+                }
+            }
         }
         /// <summary>
         /// Close the window

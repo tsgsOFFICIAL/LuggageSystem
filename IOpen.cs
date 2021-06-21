@@ -8,6 +8,9 @@ namespace LuggageSystem
 {
     public interface IOpen
     {
+        /// <summary>
+        /// Open
+        /// </summary>
         public void Open();
     }
 }

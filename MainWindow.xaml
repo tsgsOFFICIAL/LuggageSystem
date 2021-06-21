@@ -101,7 +101,7 @@
         <TextBlock Text="Baggage Sorting Facility" FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" Margin="30,2,0,420" MouseLeftButtonDown="WindowHeader_Mousedown"/>
         <TextBlock Text="by tsgsOFFICIAL" FontFamily="Roboto" FontSize="12" Foreground="GhostWhite" Margin="33,16,660,414" MouseLeftButtonDown="WindowHeader_Mousedown"/>
         <Button Background="Transparent" Content="&#x1F5D5;" FontSize="18" VerticalAlignment="Top" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,60,0" Style="{DynamicResource NavButtons}"/>
-        <Button Background="Transparent" Content="&#x1F5D6;" FontSize="18" VerticalAlignment="Top" ToolTip="Maximize" Click="Button_Click_Maximize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="No" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}"/>
+        <Button x:Name="Maximize_Button" Background="Transparent" Content="&#x1F5D6;" FontSize="18" VerticalAlignment="Top" ToolTip="Maximize" Click="Button_Click_Maximize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="No" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}"/>
         <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top" Height="31" Width="30" Style="{DynamicResource CloseBtn}"/>
         
         <!-- Small white border arount the window -->

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LuggageSystem
 {
-    public interface IClose
+    public class Producer
     {
-        /// <summary>
-        /// Close
-        /// </summary>
-        public void Close();
+        public Producer()
+        {
+
+        }
     }
 }

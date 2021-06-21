@@ -23,25 +23,17 @@ namespace LuggageSystem
     /// </summary>
     public partial class Main : Page
     {
+        private AirportManager _AirportManager = new AirportManager();
         public Main()
         {
             InitializeComponent();
-            List<string> Files = new List<string>();
+
+            List<string> LuggageList = new List<string>();
             foreach (string file in Directory.GetFiles("assets/luggage/"))
             {
-                Files.Add(file.Substring(15));
+                LuggageList.Add(file.Substring(15));
             }
+
         }
-        #region Event handling
-        /// <summary>
-        /// Event for lost focus
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Grid_LostFocus(object sender, RoutedEventArgs e)
-        {
-            // Code to execute when the window loses focus
-        }
-        #endregion
     }
 }
