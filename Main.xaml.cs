@@ -35,5 +35,22 @@ namespace LuggageSystem
             }
 
         }
+        #region Event Handlers
+        private void Button_Start_Click(object sender, RoutedEventArgs e)
+        {
+            // Start
+            ButtonStart.Content = "Stop";
+            ButtonStart.Click -= Button_Start_Click;
+            ButtonStart.Click += Button_Stop_Click;
+        }
+
+        private void Button_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            // Stop
+            ButtonStart.Content = "Start";
+            ButtonStart.Click -= Button_Stop_Click;
+            ButtonStart.Click += Button_Start_Click;
+        }
+        #endregion
     }
 }
