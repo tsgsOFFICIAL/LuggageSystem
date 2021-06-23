@@ -13,6 +13,7 @@ namespace LuggageSystem
     {
         private CheckInBooth[] CheckIns = new CheckInBooth[8];
         private Terminal[] Terminals = new Terminal[7];
+        private Luggage[] Buffers = new Luggage[7];
         private DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim");
 
         public AirportManager()

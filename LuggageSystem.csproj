@@ -9,17 +9,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Buffer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="gate.png" />
     <None Remove="icon.png" />
+    <None Remove="plane.png" />
+    <None Remove="sorter.png" />
     <None Remove="suitcase.png" />
+    <None Remove="tollbooth.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Buffer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="5.0.7" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="gate.png" />
     <Resource Include="icon.png" />
+    <Resource Include="plane.png" />
+    <Resource Include="sorter.png" />
     <Resource Include="suitcase.png" />
+    <Resource Include="tollbooth.png" />
   </ItemGroup>
 
 </Project>
