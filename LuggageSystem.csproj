@@ -9,20 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Buffer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="gate.png" />
     <None Remove="icon.png" />
     <None Remove="plane.png" />
     <None Remove="sorter.png" />
     <None Remove="suitcase.png" />
     <None Remove="tollbooth.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Buffer.cs" />
   </ItemGroup>
 
   <ItemGroup>

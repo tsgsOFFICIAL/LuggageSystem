@@ -1,39 +1,39 @@
-﻿<Page x:Class="LuggageSystem.Main"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LuggageSystem" x:Class="LuggageSystem.Main"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid Background="GhostWhite">
         <!--#region Grid Definition -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <!--#endregion-->
-        <Button x:Name="ButtonStart" Content="Start" Click="Button_Start_Click" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="9"/>
 
         <!-- Check In Booths -->
         <Image x:Name="CheckInBooth1" Grid.ColumnSpan="1" Grid.RowSpan="2" Grid.Row="8" Source="/tollbooth.png"/>
@@ -45,15 +45,24 @@
         <Image x:Name="CheckInBooth7" Grid.ColumnSpan="1" Grid.RowSpan="2" Grid.Row="8" Grid.Column="6" Source="/tollbooth.png"/>
         <Image x:Name="CheckInBooth8" Grid.ColumnSpan="1" Grid.RowSpan="2" Grid.Row="8" Grid.Column="7" Source="/tollbooth.png"/>
 
-        <Label x:Name="CheckInBoothLabel1" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="0"/>
-        <Label x:Name="CheckInBoothLabel2" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1"/>
-        <Label x:Name="CheckInBoothLabel3" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="2"/>
-        <Label x:Name="CheckInBoothLabel4" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="3"/>
-        <Label x:Name="CheckInBoothLabel5" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="4"/>
-        <Label x:Name="CheckInBoothLabel6" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="5"/>
-        <Label x:Name="CheckInBoothLabel7" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="6"/>
-        <Label x:Name="CheckInBoothLabel8" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="7"/>
+        <Label x:Name="CheckInBoothLabel1" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0"/>
+        <Label x:Name="CheckInBoothLabel2" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1"/>
+        <Label x:Name="CheckInBoothLabel3" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="2"/>
+        <Label x:Name="CheckInBoothLabel4" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3"/>
+        <Label x:Name="CheckInBoothLabel5" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="4"/>
+        <Label x:Name="CheckInBoothLabel6" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5"/>
+        <Label x:Name="CheckInBoothLabel7" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6"/>
+        <Label x:Name="CheckInBoothLabel8" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7"/>
 
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="2"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="4"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7"/>
+        
         <!-- Gates -->
         <Image x:Name="Gate1" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="0" Source="/gate.png"/>
         <Image x:Name="Gate2" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="1" Source="/gate.png"/>
@@ -62,26 +71,46 @@
         <Image x:Name="Gate5" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="4" Source="/gate.png"/>
         <Image x:Name="Gate6" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="5" Source="/gate.png"/>
         <Image x:Name="Gate7" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="6" Source="/gate.png"/>
-        
-        <Label x:Name="GateLabel1" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
-        <Label x:Name="GateLabel2" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
-        <Label x:Name="GateLabel3" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
-        <Label x:Name="GateLabel4" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3"/>
-        <Label x:Name="GateLabel5" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="4"/>
-        <Label x:Name="GateLabel6" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="5"/>
-        <Label x:Name="GateLabel7" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="6"/>
+
+        <Label x:Name="GateLabel1" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+        <Label x:Name="GateLabel2" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1"/>
+        <Label x:Name="GateLabel3" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2"/>
+        <Label x:Name="GateLabel4" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="3"/>
+        <Label x:Name="GateLabel5" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="4"/>
+        <Label x:Name="GateLabel6" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="5"/>
+        <Label x:Name="GateLabel7" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="6"/>
+
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="3"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="4"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="5"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="6"/>
         
         <!-- Planes -->
         <Image x:Name="Plane1" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="0" Source="/plane.png"/>
+        <Label x:Name="lbl_Plane1" Content="045" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane2" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="1" Source="/plane.png"/>
+        <Label x:Name="lbl_Plane2" Content="112" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane3" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="2" Source="/plane.png"/>
+        <Label x:Name="lbl_Plane3" Content="147" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane4" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="3" Source="/plane.png"/>
+        <Label x:Name="lbl_Plane4" Content="255" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane5" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="4" Source="/plane.png"/>
+        <Label x:Name="lbl_Plane5" Content="747" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane6" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="5" Source="/plane.png"/>
+        <Label x:Name="lbl_Plane6" Content="911" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane7" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="6" Source="/plane.png"/>
-        
+        <Label x:Name="lbl_Plane7" Content="992" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
+
         <!-- Sorter -->
         <Image x:Name="Sorter" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="4" Grid.Column="3" Source="/sorter.png"/>
-        <Label x:Name="SorterLabel" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Grid.Column="5"/>
+        <Label x:Name="SorterLabelIn" Content="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="3"/>
+        <Label x:Name="SorterLabelOut" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Grid.Column="4"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3"/>
+        
+        <!-- FlightInfoBoard -->
+        
     </Grid>
 </Page>
