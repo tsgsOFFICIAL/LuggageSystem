@@ -10,11 +10,15 @@ using System.Windows;
 
 namespace LuggageSystem
 {
+    /// <summary>
+    /// Airport Manager Class
+    /// </summary>
     public class AirportManager
     {
-        private CheckInBooth[] CheckIns = new CheckInBooth[8];
-        private Terminal[] Terminals = new Terminal[7];
-        private Luggage[] Buffers = new Luggage[7];
+        // Attributes
+        private List<CheckInBooth> CheckIns = new List<CheckInBooth>();
+        private List<Terminal> Terminals = new List<Terminal>();
+        private List<List<Luggage>> Buffers = new List<List<Luggage>>();
         private List<string> LuggageList = new List<string>();
         private DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim");
         /// <summary>
@@ -32,6 +36,18 @@ namespace LuggageSystem
             DBConnection.Open();
             LuggageList = GetLuggageFiles();
             
+            // Generate CheckInBooths
+            for (int i = 0; i < 8; i++)
+            {
+                CheckIns.Add(new CheckInBooth());
+            }
+            
+            // Generate Terminals
+            for (int i = 0; i < 7; i++)
+            {
+                Terminals.Add(new Terminal());
+            }
+
             // While true loop to keep the thread alive forever
             while (true)
             {
@@ -45,7 +61,7 @@ namespace LuggageSystem
         private List<string> GetLuggageFiles()
         {
             List<string> luggageList = new List<string>();
-            
+
             foreach (string file in Directory.GetFiles("assets/luggage/"))
             {
                 luggageList.Add(file.Substring(15));
