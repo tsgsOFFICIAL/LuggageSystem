@@ -34,8 +34,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!--#endregion-->
-
-        <!-- Check In Booths -->
+        <!--#region Check In Booths -->
         <Image x:Name="CheckInBooth1" Grid.ColumnSpan="1" Grid.RowSpan="2" Grid.Row="8" Source="/tollbooth.png"/>
         <Image x:Name="CheckInBooth2" Grid.ColumnSpan="1" Grid.RowSpan="2" Grid.Row="8" Grid.Column="1" Source="/tollbooth.png"/>
         <Image x:Name="CheckInBooth3" Grid.ColumnSpan="1" Grid.RowSpan="2" Grid.Row="8" Grid.Column="2" Source="/tollbooth.png"/>
@@ -62,8 +61,8 @@
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5"/>
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6"/>
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7"/>
-        
-        <!-- Gates -->
+        <!--#endregion-->
+        <!--#region Gates -->
         <Image x:Name="Gate1" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="0" Source="/gate.png"/>
         <Image x:Name="Gate2" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="1" Source="/gate.png"/>
         <Image x:Name="Gate3" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="2" Source="/gate.png"/>
@@ -87,8 +86,8 @@
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="4"/>
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="5"/>
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="6"/>
-        
-        <!-- Planes -->
+        <!--#endregion-->
+        <!--#region Planes -->
         <Image x:Name="Plane1" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="0" Source="/plane.png"/>
         <Label x:Name="lbl_Plane1" Content="045" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane2" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="1" Source="/plane.png"/>
@@ -103,14 +102,17 @@
         <Label x:Name="lbl_Plane6" Content="911" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
         <Image x:Name="Plane7" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="6" Source="/plane.png"/>
         <Label x:Name="lbl_Plane7" Content="992" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,9"/>
-
-        <!-- Sorter -->
+        <!--#endregion-->
+        <!--#region Sorter -->
         <Image x:Name="Sorter" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="4" Grid.Column="3" Source="/sorter.png"/>
         <Label x:Name="SorterLabelIn" Content="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="3"/>
         <Label x:Name="SorterLabelOut" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Grid.Column="4"/>
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3"/>
-        
-        <!-- FlightInfoBoard -->
-        
+        <!--#endregion-->
+        <!--#region Timer -->
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="8" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" CornerRadius="2">
+            <Label x:Name="lbl_time" Content="HH:MM" FontSize="20"/>
+        </Border>
+        <!--#endregion-->
     </Grid>
 </Page>

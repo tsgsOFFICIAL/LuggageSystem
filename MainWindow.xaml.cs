@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,6 +64,12 @@ namespace LuggageSystem
         /// <param name="e"></param>
         public void Button_Click_Close(object sender, RoutedEventArgs e)
         {
+            #region Kill all processes with the same name
+            foreach (Process pro in Process.GetProcessesByName(Assembly.GetExecutingAssembly().FullName.Split(',')[0]))
+            {
+                pro.Kill();
+            } 
+            #endregion
             this.Close();
         }
         /// <summary>

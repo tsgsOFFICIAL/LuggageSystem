@@ -7,36 +7,34 @@ using System.Threading.Tasks;
 
 namespace LuggageSystem
 {
-    public class CheckInBooth : IClose, IOpen
+    public class CheckInBooth : IClose, IOpen, IOpenClosed
     {
-        // Properties
+        #region Properties
         public Thread Thread { get; private set; }
-        public enum OpenClosedState
-        {
-            Open,
-            Closed
-        }
-        public int PassengerNumber { get; private set; }
-        public int LuggageNumber { get; private set; }
-        public DateTime Timestamp { get; private set; }
-        public OpenClosedState State { get; private set; }
+        public IOpenClosed.State State { get; private set; }
+        #endregion
         public CheckInBooth()
         {
+            State = IOpenClosed.State.Closed;
             Thread = new Thread(RunThread); // Initialize a new thread and start it.
             Thread.Start();
         }
         // Methods
         private void RunThread()
         {
-
+            // While true loop to keep the thread alive forever
+            while (true)
+            {
+                Thread.Sleep(250);
+            }
         }
         public void Open()
         {
-            State = OpenClosedState.Open;
+            State = IOpenClosed.State.Open;
         }
         public void Close()
         {
-            State = OpenClosedState.Closed;
+            State = IOpenClosed.State.Closed;
         }
     }
 }
