@@ -11,10 +11,12 @@ namespace LuggageSystem
     {
         #region Properties
         public Thread Thread { get; private set; }
+        public bool Run { get; set; }
         public IOpenClosed.State State { get; private set; }
         #endregion
         public CheckInBooth()
         {
+            Run = true;
             State = IOpenClosed.State.Closed;
             Thread = new Thread(RunThread); // Initialize a new thread and start it.
             Thread.Start();
@@ -22,8 +24,7 @@ namespace LuggageSystem
         // Methods
         private void RunThread()
         {
-            // While true loop to keep the thread alive forever
-            while (true)
+            while (Run)
             {
                 Thread.Sleep(250);
             }

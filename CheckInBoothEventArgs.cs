@@ -13,9 +13,11 @@ namespace LuggageSystem
     public class CheckInBoothEventArgs : EventArgs, IOpenClosed
     {
         public IOpenClosed.State State { get; private set; }
-        public CheckInBoothEventArgs(/**/)
+        public int Number { get; private set; }
+        public CheckInBoothEventArgs(IOpenClosed.State State, int Number)
         {
-
+            this.State = State;
+            this.Number = Number;
         }
     }
 }

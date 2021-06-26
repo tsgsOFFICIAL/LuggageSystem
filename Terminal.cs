@@ -14,6 +14,7 @@ namespace LuggageSystem
     {
         #region Properties
         public Thread Thread { get; private set; }
+        public bool Run { get; set; }
         public IOpenClosed.State State { get; private set; }
         #endregion
         /// <summary>
@@ -21,6 +22,7 @@ namespace LuggageSystem
         /// </summary>
         public Terminal()
         {
+            Run = true;
             State = IOpenClosed.State.Closed;
             Thread = new Thread(RunThread); // Initialize a new thread and start it.
             Thread.Start();
@@ -28,8 +30,7 @@ namespace LuggageSystem
         // Methods
         private void RunThread()
         {
-            // While true loop to keep the thread alive forever
-            while (true)
+            while (Run)
             {
                 while (State.Equals(IOpenClosed.State.Open))
                 {

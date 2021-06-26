@@ -53,14 +53,14 @@
         <Label x:Name="CheckInBoothLabel7" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6"/>
         <Label x:Name="CheckInBoothLabel8" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7"/>
 
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="2"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="4"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1" Checked="CheckBox_Checked_1" Unchecked="CheckBox_Unchecked_1"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="2" Checked="CheckBox_Checked_2" Unchecked="CheckBox_Unchecked_2"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3" Checked="CheckBox_Checked_3" Unchecked="CheckBox_Unchecked_3"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="4" Checked="CheckBox_Checked_4" Unchecked="CheckBox_Unchecked_4"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5" Checked="CheckBox_Checked_5" Unchecked="CheckBox_Unchecked_5"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6" Checked="CheckBox_Checked_6" Unchecked="CheckBox_Unchecked_6"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7" Checked="CheckBox_Checked_7" Unchecked="CheckBox_Unchecked_7"/>
         <!--#endregion-->
         <!--#region Gates -->
         <Image x:Name="Gate1" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="0" Source="/gate.png"/>
