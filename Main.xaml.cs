@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,82 +32,163 @@ namespace LuggageSystem
         public Main()
         {
             InitializeComponent();
-            _AirportManager.CheckInBoothStateChanged += AirportManagerCheckInStateChanged;
+            lbl_time.Content = $"{DateTime.Now.Hour.ToString().PadLeft(2, '0')}:{DateTime.Now.Minute.ToString().PadLeft(2, '0')}";
+            _AirportManager.TimeChanged += ChangeTime;
+            _AirportManager.LuggageCreated += CreateLuggage;
         }
         #region Event Handlers
         #region CheckIn
-        private void AirportManagerCheckInStateChanged(object sender, EventArgs e)
-        {
-            //Tjek at EventArgs er af type TemperatureEventArgs
-            if (e.GetType().Equals(typeof(CheckInBoothEventArgs)))
-            {
-                //((CheckInBoothEventArgs)e).;
-                
-            }
-        }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 0);
         }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 0);
         }
         private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 1);
         }
         private void CheckBox_Unchecked_1(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 1);
         }
         private void CheckBox_Checked_2(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 2);
         }
         private void CheckBox_Unchecked_2(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 2);
         }
         private void CheckBox_Checked_3(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 3);
         }
         private void CheckBox_Unchecked_3(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 3);
         }
         private void CheckBox_Checked_4(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 4);
         }
         private void CheckBox_Unchecked_4(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 4);
         }
         private void CheckBox_Checked_5(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 5);
         }
         private void CheckBox_Unchecked_5(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 5);
         }
         private void CheckBox_Checked_6(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 6);
         }
         private void CheckBox_Unchecked_6(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 6);
         }
         private void CheckBox_Checked_7(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Open, 7);
         }
         private void CheckBox_Unchecked_7(object sender, RoutedEventArgs e)
         {
-
+            _AirportManager.ChangeCheckInState(IOpenClosed.State.Closed, 7);
+        }
+        #endregion
+        #region Terminal
+        private void CheckBox_Checked_8(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 0);
+        }
+        private void CheckBox_Unchecked_8(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 0);
+        }
+        private void CheckBox_Checked_9(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 1);
+        }
+        private void CheckBox_Unchecked_9(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 1);
+        }
+        private void CheckBox_Checked_10(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 2);
+        }
+        private void CheckBox_Unchecked_10(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 2);
+        }
+        private void CheckBox_Checked_11(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 3);
+        }
+        private void CheckBox_Unchecked_11(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 3);
+        }
+        private void CheckBox_Checked_12(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 4);
+        }
+        private void CheckBox_Unchecked_12(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 4);
+        }
+        private void CheckBox_Checked_13(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 5);
+        }
+        private void CheckBox_Unchecked_13(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 5);
+        }
+        private void CheckBox_Checked_14(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Open, 6);
+        }
+        private void CheckBox_Unchecked_14(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 6);
+        }
+        #endregion
+        #region Producer
+        private void CheckBox_Checked_15(object sender, RoutedEventArgs e)
+        {
+            ProducerLabel.Content = "Produce";
+            _AirportManager.OpenLuggageProducer();
+        }
+        private void CheckBox_Unchecked_15(object sender, RoutedEventArgs e)
+        {
+            ProducerLabel.Content = "Wait";
+            _AirportManager.CloseLuggageProducer();
+        }
+        #endregion
+        #region Clock
+        private void ChangeTime(object sender, DateTime e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                lbl_time.Content = $"{e.Hour.ToString().PadLeft(2, '0')}:{e.Minute.ToString().PadLeft(2, '0')}";
+            });
+        }
+        #endregion
+        #region Luggage
+        private void CreateLuggage(object sender, List<Luggage> e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ProducerCountLabel.Content = e.Count;
+            });
         }
         #endregion
         #endregion

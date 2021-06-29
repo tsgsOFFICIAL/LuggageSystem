@@ -16,23 +16,28 @@ namespace LuggageSystem
         /// </summary>
         public FlightPlan.Flight Flight { get; private set; }
         /// <summary>
-        /// The unique number
-        /// </summary>
-        public int LuggageNumber { get; private set; }
-        /// <summary>
         /// The unique luggage id
         /// </summary>
-        public static int Id { get; private set; }
+        public int Id { get; private set; }
+        /// <summary>
+        /// Total Counter
+        /// </summary>
+        public int Counter { get; private set; }
+        /// <summary>
+        /// Static
+        /// </summary>
+        private static int _Counter;
         /// <summary>
         /// Creates an instance of Luggage
         /// </summary>
         /// <param name="Flight">Which flight will the luggage go on</param>
         /// <param name="LuggageNumber">What is the luggage number</param>
-        public Luggage(FlightPlan.Flight Flight, int LuggageNumber)
+        public Luggage(FlightPlan.Flight Flight)
         {
             this.Flight = Flight;
-            this.LuggageNumber = LuggageNumber;
-            Id++;
+            _Counter++;
+            Counter = _Counter;
+            Id = _Counter - 1;
         }
     }
 }

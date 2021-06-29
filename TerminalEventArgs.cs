@@ -13,9 +13,11 @@ namespace LuggageSystem
     public class TerminalEventArgs : EventArgs, IOpenClosed
     {
         public IOpenClosed.State State { get; private set; }
-        public TerminalEventArgs(/**/)
+        public int Number { get; private set; }
+        public TerminalEventArgs(IOpenClosed.State State, int Number)
         {
-
+            this.State = State;
+            this.Number = Number;
         }
     }
 }

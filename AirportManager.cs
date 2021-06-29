@@ -1,12 +1,14 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace LuggageSystem
 {
@@ -18,12 +20,13 @@ namespace LuggageSystem
         #region Attributes
         private List<CheckInBooth> CheckIns = new List<CheckInBooth>(); // Every check in booth
         private List<Terminal> Terminals = new List<Terminal>(); // Every terminal
-        private List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
-        private List<string> LuggageList = new List<string>(); // Luggage files
-        private DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim"); // Database Connection with arguments
+        private static List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
+        private static List<string> LuggageList = new List<string>(); // Luggage files
+        private static DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim"); // Database Connection with arguments
+        private bool ProduceLuggage; // Produce luggage
         private bool Run; // Run boolean
-        public event EventHandler CheckInBoothStateChanged; // Event for statechanged on the check in booth
-        public event EventHandler TerminalStateChanged; // Event for statechanged on the check in booth
+        public event EventHandler<DateTime> TimeChanged;
+        public event EventHandler<List<Luggage>> LuggageCreated;
         #endregion
         /// <summary>
         /// Returns a new instance of the AirportManager class
@@ -31,6 +34,51 @@ namespace LuggageSystem
         public AirportManager()
         {
             new Thread(InitializeManager).Start(); // Initialize a new thread and start it, without saving its reference, since we never need it again.
+            new Thread(LuggageProducer).Start();
+            new Thread(Clock).Start();
+        }
+        private void Clock()
+        {
+            DateTime now = DateTime.Now;
+            while (true)
+            {
+                if (now.AddMinutes(1).Minute <= DateTime.Now.Minute)
+                {
+                    now = DateTime.Now;
+                    TimeChanged?.Invoke(this, DateTime.Now);
+                }
+                Thread.Sleep(200);
+            }
+        }
+        /// <summary>
+        /// Produces Luggage
+        /// </summary>
+        private void LuggageProducer()
+        {
+            Buffers.Add(new List<Luggage>());
+            while (true)
+            {
+                while (ProduceLuggage)
+                {
+                    Thread.Sleep(2500);
+                    Buffers[0].Add(new Luggage(GenerateFlightLocation()));
+                    LuggageCreated?.Invoke(this, Buffers[0]);
+                }
+            }
+        }
+        /// <summary>
+        /// Open the luggage producer
+        /// </summary>
+        public void OpenLuggageProducer()
+        {
+            ProduceLuggage = true;
+        }
+        /// <summary>
+        /// Close the luggage producer
+        /// </summary>
+        public void CloseLuggageProducer()
+        {
+            ProduceLuggage = false;
         }
         /// <summary>
         /// Initialize Airport Manager
@@ -51,45 +99,38 @@ namespace LuggageSystem
             // Abort / Kill all threads
         }
         /// <summary>
-        /// 
+        /// Ghetto Event Handling lmfao
         /// </summary>
-        private void ReadCheckInBoothState()
+        /// <param name="state"></param>
+        /// <param name="number"></param>
+        public void ChangeCheckInState(IOpenClosed.State state, int number)
         {
-            IOpenClosed.State State0 = CheckIns[0].State;
-            IOpenClosed.State State1 = CheckIns[1].State;
-            IOpenClosed.State State2 = CheckIns[2].State;
-            IOpenClosed.State State3 = CheckIns[3].State;
-            IOpenClosed.State State4 = CheckIns[4].State;
-            IOpenClosed.State State5 = CheckIns[5].State;
-            IOpenClosed.State State6 = CheckIns[6].State;
-            IOpenClosed.State State7 = CheckIns[7].State;
-
-            while (true)
+            switch (state)
             {
-                if (State0 != CheckIns[0].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[0].State, 0));
-                if (State1 != CheckIns[1].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[1].State, 1));
-                if (State2 != CheckIns[2].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[2].State, 2));
-                if (State3 != CheckIns[3].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[3].State, 3));
-                if (State4 != CheckIns[4].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[4].State, 4));
-                if (State5 != CheckIns[5].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[5].State, 5));
-                if (State6 != CheckIns[6].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[6].State, 6));
-                if (State7 != CheckIns[7].State)
-                    CheckInBoothStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[7].State, 7));
+                case IOpenClosed.State.Open:
+                    CheckIns[number].Open();
+                    break;
+                case IOpenClosed.State.Closed:
+                    CheckIns[number].Close();
+                    break;
             }
         }
         /// <summary>
-        /// 
+        /// Ghetto Event Handling lmfao
         /// </summary>
-        private void ReadTerminalState()
+        /// <param name="state"></param>
+        /// <param name="number"></param>
+        public void ChangeTerminalState(IOpenClosed.State state, int number)
         {
-            //TerminalStateChanged?.Invoke(this, new CheckInBoothEventArgs(CheckIns[i].State));
+            switch (state)
+            {
+                case IOpenClosed.State.Open:
+                    Terminals[number].Open();
+                    break;
+                case IOpenClosed.State.Closed:
+                    Terminals[number].Close();
+                    break;
+            }
         }
         /// <summary>
         /// Generate x amount of Check Ins
@@ -100,8 +141,6 @@ namespace LuggageSystem
             for (int i = 0; i < amount; i++)
             {
                 CheckIns.Add(new CheckInBooth());
-                // Starts a thread that runs in the background
-                new Thread(ReadCheckInBoothState).Start();
             }
         }
         /// <summary>
@@ -113,9 +152,17 @@ namespace LuggageSystem
             for (int i = 0; i < amount; i++)
             {
                 Terminals.Add(new Terminal());
-                // Starts a thread that runs in the background
-                new Thread(ReadTerminalState).Start();
             }
+        }
+        private FlightPlan.Flight GenerateFlightLocation()
+        {
+            FlightPlan.Flight[] flights = (FlightPlan.Flight[])Enum.GetValues(typeof(FlightPlan.Flight));
+            int randomIndex = new Random().Next(0, flights.Length);
+
+            return flights[randomIndex];
+            // This seemingly advanced one-liner is actually pretty simple, starting from the back, it generates a random number from 0, to max length of the enum Flight and uses it to find the appropriate name
+            // From that enum, and then using that name to get the value (not the index) of said enum, to the cast it all back to a Flight.
+            //return (FlightPlan.Flight)Enum.Parse(typeof(FlightPlan.Flight), Enum.GetName(typeof(FlightPlan.Flight), new Random().Next(0, Enum.GetNames(typeof(FlightPlan.Flight)).Length)));
         }
         /// <summary>
         /// Get luggagefiles / images

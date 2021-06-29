@@ -79,13 +79,13 @@
         <Label x:Name="GateLabel6" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="5"/>
         <Label x:Name="GateLabel7" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="6"/>
 
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="3"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="4"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="5"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="6"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Checked="CheckBox_Checked_8" Unchecked="CheckBox_Unchecked_8"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Checked="CheckBox_Checked_9" Unchecked="CheckBox_Unchecked_9"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2" Checked="CheckBox_Checked_10" Unchecked="CheckBox_Unchecked_10"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="3" Checked="CheckBox_Checked_11" Unchecked="CheckBox_Unchecked_11"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="4" Checked="CheckBox_Checked_12" Unchecked="CheckBox_Unchecked_12"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="5" Checked="CheckBox_Checked_13" Unchecked="CheckBox_Unchecked_13"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="6" Checked="CheckBox_Checked_14" Unchecked="CheckBox_Unchecked_14"/>
         <!--#endregion-->
         <!--#region Planes -->
         <Image x:Name="Plane1" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="0" Grid.Column="0" Source="/plane.png"/>
@@ -109,9 +109,14 @@
         <Label x:Name="SorterLabelOut" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Grid.Column="4"/>
         <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3"/>
         <!--#endregion-->
+        <!--#region Luggage Producer -->
+        <Label x:Name="ProducerLabel" Content="Wait" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="9"/>
+        <Label x:Name="ProducerCountLabel" Content="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="8"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="8" Grid.Column="9" Checked="CheckBox_Checked_15" Unchecked="CheckBox_Unchecked_15"/>
+        <!--#endregion-->
         <!--#region Timer -->
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="8" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" CornerRadius="2">
-            <Label x:Name="lbl_time" Content="HH:MM" FontSize="20"/>
+            <Label x:Name="lbl_time" Content="HH:MM" FontSize="16"/>
         </Border>
         <!--#endregion-->
     </Grid>
