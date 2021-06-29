@@ -21,13 +21,14 @@ namespace LuggageSystem
         private List<CheckInBooth> CheckIns = new List<CheckInBooth>(); // Every check in booth
         private List<Terminal> Terminals = new List<Terminal>(); // Every terminal
         //private static List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
-        private static List<Buffer> Buffers = new List<Buffer>();
+        //private static List<Buffer> Buffers = new List<Buffer>();
+        private static List<Luggage> Buffer = new List<Luggage>();
         private static List<string> LuggageList = new List<string>(); // Luggage files
         private static DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim"); // Database Connection with arguments
         private bool ProduceLuggage; // Produce luggage
         public event EventHandler<DateTime> TimeChanged;
         public event EventHandler<List<Luggage>> LuggageCreated;
-        public event EventHandler<Luggage> LuggageMoved;
+        public event EventHandler<CheckInBooth> LuggageMoved;
         public bool RunCheckIns { get; set; } // Run boolean
         #endregion
         /// <summary>
@@ -50,16 +51,17 @@ namespace LuggageSystem
             {
                 try
                 {
-                    if (Buffers[0].LuggageList.Count > 0) // Check if there is anything in the buffer
+                    if (Buffer.Count > 0) // Check if there is anything in the buffer
                     {
                         //Monitor.Enter(Buffers[0]);
                         // If the booth is open
-                        if (CheckIns[currentBooth + 1].State.Equals(IOpenClosed.State.Open))
+                        if (CheckIns[currentBooth].State.Equals(IOpenClosed.State.Open))
                         {
-                            Buffers[currentBooth + 1].LuggageList.Add(Buffers[0].LuggageList[Buffers[0].LuggageList.Count - 1]); // Move the luggage from Buffers[0] to the current Buffer
-                            Buffers[0].LuggageList.RemoveAt(Buffers[0].LuggageList.Count - 1); // Then remove it from the original buffers[0]
-                                                                                               //temp[9].AddTimeStamp(DateTime.Now, "");
-                            LuggageMoved?.Invoke(this, Buffers[currentBooth + 1].LuggageList[Buffers[currentBooth + 1].LuggageList.Count - 1]); // Invoke the event
+                            CheckIns[currentBooth].Buffer.Add(Buffer[Buffer.Count - 1]); // Move the luggage from Buffers[0] to the current Buffer
+                            Buffer.RemoveAt(Buffer.Count - 1); // Then remove it from the original buffers[0]
+
+                            LuggageMoved?.Invoke(this, CheckIns[currentBooth]); // Invoke the event
+                            LuggageCreated?.Invoke(this, Buffer);
                         }
                     }
                 }
@@ -72,7 +74,7 @@ namespace LuggageSystem
                     //Monitor.PulseAll(Buffers[0]);
                     //Monitor.Exit(Buffers[0]);
                     // Up one
-                    if (currentBooth + 1 == 9)
+                    if (currentBooth + 1 == 8)
                     {
                         currentBooth = 0;
                     }
@@ -82,6 +84,7 @@ namespace LuggageSystem
                     }
                 }
                 Thread.Sleep(250);
+                Debug.WriteLine(currentBooth);
             }
         }
         /// <summary>
@@ -118,14 +121,13 @@ namespace LuggageSystem
         /// </summary>
         private void LuggageProducer()
         {
-            Buffers.Add(new Buffer(new List<Luggage>()));
             while (true)
             {
                 while (ProduceLuggage)
                 {
-                    Thread.Sleep(2500);
-                    Buffers[0].LuggageList.Add(new Luggage(GenerateFlightLocation()));
-                    LuggageCreated?.Invoke(this, Buffers[0].LuggageList);
+                    Thread.Sleep(500);
+                    Buffer.Add(new Luggage(GenerateFlightLocation()));
+                    LuggageCreated?.Invoke(this, Buffer);
                 }
             }
         }

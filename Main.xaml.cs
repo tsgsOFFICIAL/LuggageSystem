@@ -35,6 +35,7 @@ namespace LuggageSystem
             lbl_time.Content = $"{DateTime.Now.Hour.ToString().PadLeft(2, '0')}:{DateTime.Now.Minute.ToString().PadLeft(2, '0')}";
             _AirportManager.TimeChanged += ChangeTime;
             _AirportManager.LuggageCreated += CreateLuggage;
+            _AirportManager.LuggageMoved += UpdateLuggage;
         }
         #region Event Handlers
         #region CheckIn
@@ -183,6 +184,39 @@ namespace LuggageSystem
         }
         #endregion
         #region Luggage
+        private void UpdateLuggage(object sender, CheckInBooth e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (e.Id)
+                {
+                    case 0:
+                        CheckInBoothLabel1.Content = e.Buffer.Count;
+                        break;
+                    case 1:
+                        CheckInBoothLabel2.Content = e.Buffer.Count;
+                        break;
+                    case 2:
+                        CheckInBoothLabel3.Content = e.Buffer.Count;
+                        break;
+                    case 3:
+                        CheckInBoothLabel4.Content = e.Buffer.Count;
+                        break;
+                    case 4:
+                        CheckInBoothLabel5.Content = e.Buffer.Count;
+                        break;
+                    case 5:
+                        CheckInBoothLabel6.Content = e.Buffer.Count;
+                        break;
+                    case 6:
+                        CheckInBoothLabel7.Content = e.Buffer.Count;
+                        break;
+                    case 7:
+                        CheckInBoothLabel8.Content = e.Buffer.Count;
+                        break;
+                }
+            });
+        }
         private void CreateLuggage(object sender, List<Luggage> e)
         {
             Dispatcher.Invoke(() =>
