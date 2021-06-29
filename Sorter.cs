@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace LuggageSystem
 {
+    /// <summary>
+    /// Sorter class
+    /// </summary>
     public class Sorter
     {
-        public int LuggageNumber { get; private set; }
-        public DateTime TimestampIn { get; private set; }
-        public DateTime TimestampOut { get; private set; }
+        public List<Luggage> BufferIn { get; set; } = new List<Luggage>();
+        public List<Luggage> BufferOut { get; set; } = new List<Luggage>();
+        public Sorter()
+        {
+
+        }
     }
 }

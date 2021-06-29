@@ -107,7 +107,7 @@
         <Image x:Name="Sorter" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="4" Grid.Column="3" Source="/sorter.png"/>
         <Label x:Name="SorterLabelIn" Content="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="3"/>
         <Label x:Name="SorterLabelOut" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Grid.Column="4"/>
-        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3"/>
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3" Checked="CheckBox_Checked_16" Unchecked="CheckBox_Unchecked_16"/>
         <!--#endregion-->
         <!--#region Luggage Producer -->
         <Label x:Name="ProducerLabel" Content="Wait" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="8" Grid.Column="9"/>

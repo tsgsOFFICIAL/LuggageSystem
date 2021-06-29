@@ -36,6 +36,8 @@ namespace LuggageSystem
             _AirportManager.TimeChanged += ChangeTime;
             _AirportManager.LuggageCreated += CreateLuggage;
             _AirportManager.LuggageMoved += UpdateLuggage;
+            _AirportManager.SortedLuggageIn += UpdateLuggageSorterIn;
+            _AirportManager.SortedLuggageOut += UpdateLuggageSorterOut;
         }
         #region Event Handlers
         #region CheckIn
@@ -174,6 +176,30 @@ namespace LuggageSystem
             _AirportManager.CloseLuggageProducer();
         }
         #endregion
+        #region Sorter
+        private void CheckBox_Checked_16(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.StartSorting();
+        }
+        private void CheckBox_Unchecked_16(object sender, RoutedEventArgs e)
+        {
+            _AirportManager.StopSorting();
+        }
+        private void UpdateLuggageSorterIn(object sender, List<Luggage> e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                SorterLabelIn.Content = e.Count;
+            });
+        }
+        private void UpdateLuggageSorterOut(object sender, List<Luggage> e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                SorterLabelOut.Content = e.Count;
+            });
+        }
+        #endregion
         #region Clock
         private void ChangeTime(object sender, DateTime e)
         {
@@ -225,6 +251,7 @@ namespace LuggageSystem
             });
         }
         #endregion
+
         #endregion
     }
 }

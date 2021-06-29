@@ -18,17 +18,21 @@ namespace LuggageSystem
     public class AirportManager
     {
         #region Attributes
-        private List<CheckInBooth> CheckIns = new List<CheckInBooth>(); // Every check in booth
+        private static List<CheckInBooth> CheckIns = new List<CheckInBooth>(); // Every check in booth
         private List<Terminal> Terminals = new List<Terminal>(); // Every terminal
+        private Sorter Sorter = new Sorter();
         //private static List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
         //private static List<Buffer> Buffers = new List<Buffer>();
         private static List<Luggage> Buffer = new List<Luggage>();
         private static List<string> LuggageList = new List<string>(); // Luggage files
         private static DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim"); // Database Connection with arguments
         private bool ProduceLuggage; // Produce luggage
+        private bool SortLuggage; // Sort the luggage
         public event EventHandler<DateTime> TimeChanged;
         public event EventHandler<List<Luggage>> LuggageCreated;
         public event EventHandler<CheckInBooth> LuggageMoved;
+        public event EventHandler<List<Luggage>> SortedLuggageIn;
+        public event EventHandler<List<Luggage>> SortedLuggageOut;
         public bool RunCheckIns { get; set; } // Run boolean
         #endregion
         /// <summary>
@@ -40,6 +44,82 @@ namespace LuggageSystem
             new Thread(LuggageProducer).Start();
             new Thread(Clock).Start();
             new Thread(CheckLuggageIn).Start();
+            new Thread(SortTheLuggage).Start();
+        }
+        /// <summary>
+        /// LuggageSorter
+        /// </summary>
+        private void SortTheLuggage()
+        {
+            int currentBooth = 0;
+            Thread.Sleep(2500);
+            while (true)
+            {
+                try
+                {
+                    Monitor.Enter(Buffer);
+                    Monitor.Enter(CheckIns[currentBooth]);
+                    Monitor.Enter(Sorter.BufferIn);
+                    Sorter.BufferIn.Add(CheckIns[currentBooth].Buffer[CheckIns[currentBooth].Buffer.Count - 1]); // Add the last one to the sorter
+                    CheckIns[currentBooth].Buffer.RemoveAt(CheckIns[currentBooth].Buffer.Count - 1); // Remove it from the CheckIn buffer
+
+                    LuggageMoved?.Invoke(this, CheckIns[currentBooth]); // Invoke the event
+                    SortedLuggageIn?.Invoke(this, Sorter.BufferIn);
+                }
+                catch (Exception)
+                { }
+                finally
+                {
+                    Monitor.Exit(Sorter.BufferIn);
+                    Monitor.Exit(CheckIns[currentBooth]);
+                    Monitor.Exit(Buffer);
+                    // Up one
+                    if (currentBooth + 1 == 8)
+                    {
+                        currentBooth = 0;
+                    }
+                    else
+                    {
+                        currentBooth++;
+                    }
+                }
+                Thread.Sleep(100);
+
+                while (SortLuggage)
+                {
+                    try
+                    {
+                        Monitor.Enter(Sorter.BufferIn);
+                        Monitor.Enter(Sorter.BufferOut);
+
+                        Sorter.BufferOut.Add(Sorter.BufferIn[Sorter.BufferIn.Count - 1]); // Add the last one
+                        Sorter.BufferIn.RemoveAt(Sorter.BufferIn.Count - 1); // Remove it from the buffer
+
+                        SortedLuggageOut?.Invoke(this, Sorter.BufferOut);
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Sorter.BufferOut);
+                        Monitor.Exit(Sorter.BufferIn);
+                    }
+                    Thread.Sleep(100);
+                }
+            }
+
+        }
+        /// <summary>
+        /// Start sorting
+        /// </summary>
+        public void StartSorting()
+        {
+            SortLuggage = true;
+        }
+        /// <summary>
+        /// Stop sorting
+        /// </summary>
+        public void StopSorting()
+        {
+            SortLuggage = false;
         }
         /// <summary>
         /// Check the luggage in at the open check in booths
@@ -51,28 +131,33 @@ namespace LuggageSystem
             {
                 try
                 {
+                    Monitor.Enter(Buffer);
                     if (Buffer.Count > 0) // Check if there is anything in the buffer
                     {
-                        //Monitor.Enter(Buffers[0]);
-                        // If the booth is open
-                        if (CheckIns[currentBooth].State.Equals(IOpenClosed.State.Open))
+                        try
                         {
-                            CheckIns[currentBooth].Buffer.Add(Buffer[Buffer.Count - 1]); // Move the luggage from Buffers[0] to the current Buffer
-                            Buffer.RemoveAt(Buffer.Count - 1); // Then remove it from the original buffers[0]
+                            Monitor.Enter(CheckIns[currentBooth]);
+                            // If the booth is open
+                            if (CheckIns[currentBooth].State.Equals(IOpenClosed.State.Open))
+                            {
+                                CheckIns[currentBooth].Buffer.Add(Buffer[Buffer.Count - 1]); // Move the luggage from Buffers[0] to the current Buffer
+                                Buffer.RemoveAt(Buffer.Count - 1); // Then remove it from the original buffers[0]
 
-                            LuggageMoved?.Invoke(this, CheckIns[currentBooth]); // Invoke the event
-                            LuggageCreated?.Invoke(this, Buffer);
+                                LuggageMoved?.Invoke(this, CheckIns[currentBooth]); // Invoke the event
+                                LuggageCreated?.Invoke(this, Buffer);
+                            }
+                        }
+                        finally
+                        {
+                            Monitor.Exit(CheckIns[currentBooth]);
                         }
                     }
                 }
                 catch (Exception)
-                {
-                    //Monitor.Wait(Buffers[0]);
-                }
+                { }
                 finally
                 {
-                    //Monitor.PulseAll(Buffers[0]);
-                    //Monitor.Exit(Buffers[0]);
+                    Monitor.Exit(Buffer);
                     // Up one
                     if (currentBooth + 1 == 8)
                     {
@@ -84,24 +169,7 @@ namespace LuggageSystem
                     }
                 }
                 Thread.Sleep(250);
-                Debug.WriteLine(currentBooth);
             }
-        }
-        /// <summary>
-        /// Check if any of the booths are open
-        /// </summary>
-        /// <returns>This method returns true if any of the booths are open, otherwise returns false.</returns>
-        private bool CheckForOpenBooths()
-        {
-            bool areAnyOpen = false;
-
-            foreach (CheckInBooth checkInBooth in CheckIns)
-            {
-                if (checkInBooth.State.Equals(IOpenClosed.State.Open))
-                    areAnyOpen = true;
-            }
-
-            return areAnyOpen;
         }
         private void Clock()
         {
@@ -125,10 +193,19 @@ namespace LuggageSystem
             {
                 while (ProduceLuggage)
                 {
+                    try
+                    {
+                        Monitor.Enter(Buffer);
+                        Buffer.Add(new Luggage(GenerateFlightLocation()));
+                        LuggageCreated?.Invoke(this, Buffer);
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Buffer);
+                    }
                     Thread.Sleep(500);
-                    Buffer.Add(new Luggage(GenerateFlightLocation()));
-                    LuggageCreated?.Invoke(this, Buffer);
                 }
+                Thread.Sleep(1000);
             }
         }
         /// <summary>
