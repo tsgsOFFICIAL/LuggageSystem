@@ -10,7 +10,6 @@ namespace LuggageSystem
     public class CheckInBooth : IClose, IOpen, IOpenClosed
     {
         #region Properties
-        public Thread Thread { get; private set; }
         public bool Run { get; set; }
         public IOpenClosed.State State { get; private set; }
         #endregion
@@ -18,16 +17,18 @@ namespace LuggageSystem
         {
             Run = true;
             State = IOpenClosed.State.Closed;
-            Thread = new Thread(RunThread); // Initialize a new thread and start it.
-            Thread.Start();
+            new Thread(RunThread).Start(); // Initialize a new thread and start it.
         }
         // Methods
         private void RunThread()
         {
-            while (Run)
-            {
-                Thread.Sleep(250);
-            }
+            //while (true)
+            //{
+            //    while (Run)
+            //    {
+            //        Thread.Sleep(250);
+            //    }
+            //}
         }
         public void Open()
         {

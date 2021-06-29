@@ -20,13 +20,15 @@ namespace LuggageSystem
         #region Attributes
         private List<CheckInBooth> CheckIns = new List<CheckInBooth>(); // Every check in booth
         private List<Terminal> Terminals = new List<Terminal>(); // Every terminal
-        private static List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
+        //private static List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
+        private static List<Buffer> Buffers = new List<Buffer>();
         private static List<string> LuggageList = new List<string>(); // Luggage files
         private static DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim"); // Database Connection with arguments
         private bool ProduceLuggage; // Produce luggage
-        private bool Run; // Run boolean
         public event EventHandler<DateTime> TimeChanged;
         public event EventHandler<List<Luggage>> LuggageCreated;
+        public event EventHandler<Luggage> LuggageMoved;
+        public bool RunCheckIns { get; set; } // Run boolean
         #endregion
         /// <summary>
         /// Returns a new instance of the AirportManager class
@@ -36,6 +38,67 @@ namespace LuggageSystem
             new Thread(InitializeManager).Start(); // Initialize a new thread and start it, without saving its reference, since we never need it again.
             new Thread(LuggageProducer).Start();
             new Thread(Clock).Start();
+            new Thread(CheckLuggageIn).Start();
+        }
+        /// <summary>
+        /// Check the luggage in at the open check in booths
+        /// </summary>
+        private void CheckLuggageIn()
+        {
+            int currentBooth = 0;
+            while (true)
+            {
+                try
+                {
+                    if (Buffers[0].LuggageList.Count > 0) // Check if there is anything in the buffer
+                    {
+                        //Monitor.Enter(Buffers[0]);
+                        // If the booth is open
+                        if (CheckIns[currentBooth + 1].State.Equals(IOpenClosed.State.Open))
+                        {
+                            Buffers[currentBooth + 1].LuggageList.Add(Buffers[0].LuggageList[Buffers[0].LuggageList.Count - 1]); // Move the luggage from Buffers[0] to the current Buffer
+                            Buffers[0].LuggageList.RemoveAt(Buffers[0].LuggageList.Count - 1); // Then remove it from the original buffers[0]
+                                                                                               //temp[9].AddTimeStamp(DateTime.Now, "");
+                            LuggageMoved?.Invoke(this, Buffers[currentBooth + 1].LuggageList[Buffers[currentBooth + 1].LuggageList.Count - 1]); // Invoke the event
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    //Monitor.Wait(Buffers[0]);
+                }
+                finally
+                {
+                    //Monitor.PulseAll(Buffers[0]);
+                    //Monitor.Exit(Buffers[0]);
+                    // Up one
+                    if (currentBooth + 1 == 9)
+                    {
+                        currentBooth = 0;
+                    }
+                    else
+                    {
+                        currentBooth++;
+                    }
+                }
+                Thread.Sleep(250);
+            }
+        }
+        /// <summary>
+        /// Check if any of the booths are open
+        /// </summary>
+        /// <returns>This method returns true if any of the booths are open, otherwise returns false.</returns>
+        private bool CheckForOpenBooths()
+        {
+            bool areAnyOpen = false;
+
+            foreach (CheckInBooth checkInBooth in CheckIns)
+            {
+                if (checkInBooth.State.Equals(IOpenClosed.State.Open))
+                    areAnyOpen = true;
+            }
+
+            return areAnyOpen;
         }
         private void Clock()
         {
@@ -55,14 +118,14 @@ namespace LuggageSystem
         /// </summary>
         private void LuggageProducer()
         {
-            Buffers.Add(new List<Luggage>());
+            Buffers.Add(new Buffer(new List<Luggage>()));
             while (true)
             {
                 while (ProduceLuggage)
                 {
                     Thread.Sleep(2500);
-                    Buffers[0].Add(new Luggage(GenerateFlightLocation()));
-                    LuggageCreated?.Invoke(this, Buffers[0]);
+                    Buffers[0].LuggageList.Add(new Luggage(GenerateFlightLocation()));
+                    LuggageCreated?.Invoke(this, Buffers[0].LuggageList);
                 }
             }
         }
@@ -89,14 +152,6 @@ namespace LuggageSystem
             LuggageList = GetLuggageFiles(); // Call GetLuggageFiles() and return a List<string>
             GenerateCheckIns(); // Generate check ins
             GenerateTerminals(); // Generate terminals
-            Run = true; // Set run == true, to make it run
-
-            while (Run)
-            {
-                Thread.Sleep(50);
-            }
-
-            // Abort / Kill all threads
         }
         /// <summary>
         /// Ghetto Event Handling lmfao

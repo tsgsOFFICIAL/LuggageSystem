@@ -7,6 +7,28 @@ using System.Threading.Tasks;
 namespace LuggageSystem
 {
     /// <summary>
+    /// TimesStamp class
+    /// </summary>
+    public class TimeStamp
+    {
+        /// <summary>
+        /// Time
+        /// </summary>
+        public DateTime Time { get; private set; }
+        /// <summary>
+        /// Location
+        /// </summary>
+        public string Location { get; private set; }
+        /// <summary>
+        /// Creates an instance of the TimeStamp class
+        /// </summary>
+        public TimeStamp(DateTime Time, string Location)
+        {
+            this.Time = Time;
+            this.Location = Location;
+        }
+    }
+    /// <summary>
     /// Luggage class
     /// </summary>
     public class Luggage
@@ -24,6 +46,10 @@ namespace LuggageSystem
         /// </summary>
         public int Counter { get; private set; }
         /// <summary>
+        /// Timestamps and locations
+        /// </summary>
+        public List<TimeStamp> TimeStamps { get; private set; } = new List<TimeStamp>();
+        /// <summary>
         /// Static
         /// </summary>
         private static int _Counter;
@@ -38,6 +64,16 @@ namespace LuggageSystem
             _Counter++;
             Counter = _Counter;
             Id = _Counter - 1;
+            TimeStamps.Add(new TimeStamp(DateTime.Now, "Entrance"));
+        }
+        /// <summary>
+        /// Add a timestamp to the luggage
+        /// </summary>
+        /// <param name="Time">The time</param>
+        /// <param name="Location">Where is the luggage now</param>
+        public void AddTimeStamp(DateTime Time, string Location)
+        {
+            TimeStamps.Add(new TimeStamp(Time, Location));
         }
     }
 }
