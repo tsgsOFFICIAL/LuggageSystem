@@ -32,7 +32,7 @@ namespace LuggageSystem
         public Main()
         {
             InitializeComponent();
-            lbl_time.Content = $"{DateTime.Now.Hour.ToString().PadLeft(2, '0')}:{DateTime.Now.Minute.ToString().PadLeft(2, '0')}";
+            lbl_time.Content = $"{DateTime.Now.ToString("hh:mm tt")}";
             _AirportManager.TimeChanged += ChangeTime;
             _AirportManager.LuggageCreated += CreateLuggage;
             _AirportManager.LuggageMoved += UpdateLuggage;
@@ -205,7 +205,7 @@ namespace LuggageSystem
         {
             Dispatcher.Invoke(() =>
             {
-                lbl_time.Content = $"{e.Hour.ToString().PadLeft(2, '0')}:{e.Minute.ToString().PadLeft(2, '0')}";
+                lbl_time.Content = $"{e.ToString("hh:mm tt")}";
             });
         }
         #endregion
@@ -251,7 +251,6 @@ namespace LuggageSystem
             });
         }
         #endregion
-
         #endregion
     }
 }

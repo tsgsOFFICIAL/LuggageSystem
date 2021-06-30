@@ -51,10 +51,16 @@ namespace LuggageSystem
         /// </summary>
         private void SortTheLuggage()
         {
+            bool manualOverride = false;
             int currentBooth = 0;
-            Thread.Sleep(2500);
+            Thread.Sleep(5000);
             while (true)
             {
+                if (manualOverride)
+                {
+                    manualOverride = false;
+                    SortLuggage = true;
+                }
                 try
                 {
                     Monitor.Enter(Buffer);
@@ -70,6 +76,7 @@ namespace LuggageSystem
                 { }
                 finally
                 {
+                    //Monitor.Pulse(Sorter.BufferIn);
                     Monitor.Exit(Sorter.BufferIn);
                     Monitor.Exit(CheckIns[currentBooth]);
                     Monitor.Exit(Buffer);
@@ -84,23 +91,37 @@ namespace LuggageSystem
                     }
                 }
                 Thread.Sleep(100);
-
                 while (SortLuggage)
                 {
-                    try
+                    lock (Sorter)
                     {
-                        Monitor.Enter(Sorter.BufferIn);
-                        Monitor.Enter(Sorter.BufferOut);
+                        try
+                        {
+                            Monitor.Enter(Sorter.BufferIn);
+                            Monitor.Enter(Sorter.BufferOut);
+                            if (Sorter.BufferIn.Count > 0)
+                            {
+                                Sorter.BufferOut.Add(Sorter.BufferIn[Sorter.BufferIn.Count - 1]); // Add the last one
+                                Sorter.BufferIn.RemoveAt(Sorter.BufferIn.Count - 1); // Remove it from the buffer
 
-                        Sorter.BufferOut.Add(Sorter.BufferIn[Sorter.BufferIn.Count - 1]); // Add the last one
-                        Sorter.BufferIn.RemoveAt(Sorter.BufferIn.Count - 1); // Remove it from the buffer
-
-                        SortedLuggageOut?.Invoke(this, Sorter.BufferOut);
-                    }
-                    finally
-                    {
-                        Monitor.Exit(Sorter.BufferOut);
-                        Monitor.Exit(Sorter.BufferIn);
+                                SortedLuggageIn?.Invoke(this, Sorter.BufferIn);
+                                SortedLuggageOut?.Invoke(this, Sorter.BufferOut);
+                            }
+                            else
+                            {
+                                // Pulse and Wait will not work here, unless a new thread is implemented
+                                // Instead I'll just wait
+                                //Monitor.Pulse(Sorter.BufferIn);
+                                //Monitor.Wait(Sorter.BufferIn);
+                                manualOverride = true;
+                                SortLuggage = false;
+                            }
+                        }
+                        finally
+                        {
+                            Monitor.Exit(Sorter.BufferOut);
+                            Monitor.Exit(Sorter.BufferIn);
+                        }
                     }
                     Thread.Sleep(100);
                 }
@@ -112,14 +133,20 @@ namespace LuggageSystem
         /// </summary>
         public void StartSorting()
         {
-            SortLuggage = true;
+            lock (Sorter)
+            {
+                SortLuggage = true;
+            }
         }
         /// <summary>
         /// Stop sorting
         /// </summary>
         public void StopSorting()
         {
-            SortLuggage = false;
+            lock (Sorter)
+            {
+                SortLuggage = false;
+            }
         }
         /// <summary>
         /// Check the luggage in at the open check in booths
