@@ -10,14 +10,14 @@ namespace LuggageSystem
     /// This class i used to send event arguments around the application<br/>
     /// This event's arguments is used for every terminal and its properties.
     /// </summary>
-    public class TerminalEventArgs : EventArgs, IOpenClosed
+    public class TerminalEventArgs : EventArgs
     {
-        public IOpenClosed.State State { get; private set; }
-        public int Number { get; private set; }
-        public TerminalEventArgs(IOpenClosed.State State, int Number)
+        public Terminal Terminal { get; private set; }
+        public List<Luggage> LuggageList { get; set; }
+        public TerminalEventArgs(Terminal terminal, List<Luggage> luggageList)
         {
-            this.State = State;
-            this.Number = Number;
+            Terminal = terminal;
+            LuggageList = luggageList;
         }
     }
 }

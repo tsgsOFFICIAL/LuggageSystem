@@ -21,8 +21,6 @@ namespace LuggageSystem
         private static List<CheckInBooth> CheckIns = new List<CheckInBooth>(); // Every check in booth
         private List<Terminal> Terminals = new List<Terminal>(); // Every terminal
         private Sorter Sorter = new Sorter();
-        //private static List<List<Luggage>> Buffers = new List<List<Luggage>>(); // Every buffer
-        //private static List<Buffer> Buffers = new List<Buffer>();
         private static List<Luggage> Buffer = new List<Luggage>();
         private static List<string> LuggageList = new List<string>(); // Luggage files
         private static DBConnection DBConnection = new DBConnection("127.0.0.1", "AirportManagerBoss", "password", "FlightSim"); // Database Connection with arguments
@@ -33,6 +31,7 @@ namespace LuggageSystem
         public event EventHandler<CheckInBooth> LuggageMoved;
         public event EventHandler<List<Luggage>> SortedLuggageIn;
         public event EventHandler<List<Luggage>> SortedLuggageOut;
+        public event EventHandler<TerminalEventArgs> LuggageMovedToTerminal;
         public bool RunCheckIns { get; set; } // Run boolean
         #endregion
         /// <summary>
@@ -45,15 +44,111 @@ namespace LuggageSystem
             new Thread(Clock).Start();
             new Thread(CheckLuggageIn).Start();
             new Thread(SortTheLuggage).Start();
+            new Thread(TerminalTakeLuggage).Start();
+        }
+        /// <summary>
+        /// Take the luggage from the sorter to the terminals
+        /// </summary>
+        private void TerminalTakeLuggage()
+        {
+            Thread.Sleep(5000);
+            int currentIndex = 0;
+
+            while (true)
+            {
+                try
+                {
+                    Monitor.Enter(Sorter.BufferOut);
+                    Monitor.Enter(Terminals[currentIndex].Buffer);
+                    lock (Sorter)
+                    {
+                        for (int i = 0; i < Sorter.BufferOut.Count; i++)
+                        {
+                            switch (currentIndex)
+                            {
+                                case 0:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.PL))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                                case 1:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.UK))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                                case 2:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.CPH))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                                case 3:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.USA))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                                case 4:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.EG))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                                case 5:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.SWE))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                                case 6:
+                                    if (Sorter.BufferOut[i].Flight.Equals(FlightPlan.Flight.DE))
+                                    {
+                                        Terminals[currentIndex].Buffer.Add(Sorter.BufferOut[i]); // Add it
+                                        Sorter.BufferOut.RemoveAt(i); // Remove it
+                                    }
+                                    break;
+                            }
+                        }
+                        LuggageMovedToTerminal?.Invoke(this, new TerminalEventArgs(Terminals[currentIndex], Sorter.BufferOut)); // Invoke the event
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    Monitor.Enter(Terminals[currentIndex].Buffer);
+                    Monitor.Exit(Sorter.BufferOut);
+                    // Up one
+                    if (currentIndex + 1 == 7)
+                    {
+                        currentIndex = 0;
+                    }
+                    else
+                    {
+                        currentIndex++;
+                    }
+                }
+                Thread.Sleep(250);
+            }
         }
         /// <summary>
         /// LuggageSorter
         /// </summary>
         private void SortTheLuggage()
         {
+            Thread.Sleep(5000);
             bool manualOverride = false;
             int currentBooth = 0;
-            Thread.Sleep(5000);
             while (true)
             {
                 if (manualOverride)

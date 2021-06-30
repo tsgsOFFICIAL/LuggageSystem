@@ -38,6 +38,7 @@ namespace LuggageSystem
             _AirportManager.LuggageMoved += UpdateLuggage;
             _AirportManager.SortedLuggageIn += UpdateLuggageSorterIn;
             _AirportManager.SortedLuggageOut += UpdateLuggageSorterOut;
+            _AirportManager.LuggageMovedToTerminal += UpdateTerminals;
         }
         #region Event Handlers
         #region CheckIn
@@ -162,6 +163,37 @@ namespace LuggageSystem
         private void CheckBox_Unchecked_14(object sender, RoutedEventArgs e)
         {
             _AirportManager.ChangeTerminalState(IOpenClosed.State.Closed, 6);
+        }
+        private void UpdateTerminals(object sender, TerminalEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (e.Terminal.Id)
+                {
+                    case 0:
+                        GateLabel1.Content = e.Terminal.Buffer.Count;
+                        break;
+                    case 1:
+                        GateLabel2.Content = e.Terminal.Buffer.Count;
+                        break;
+                    case 2:
+                        GateLabel3.Content = e.Terminal.Buffer.Count;
+                        break;
+                    case 3:
+                        GateLabel4.Content = e.Terminal.Buffer.Count;
+                        break;
+                    case 4:
+                        GateLabel5.Content = e.Terminal.Buffer.Count;
+                        break;
+                    case 5:
+                        GateLabel6.Content = e.Terminal.Buffer.Count;
+                        break;
+                    case 6:
+                        GateLabel7.Content = e.Terminal.Buffer.Count;
+                        break;
+                }
+                SorterLabelOut.Content = e.LuggageList.Count;
+            });
         }
         #endregion
         #region Producer
